@@ -4,6 +4,7 @@ This is the main file that has script to start the app
 import sys
 import pygame
 import settings
+from board import Board
 
 class Game:
     '''
@@ -15,6 +16,7 @@ class Game:
         pygame.display.set_caption('Da game')
         self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
         self.clock = pygame.time.Clock()
+        self.board = Board()
 
     def run(self):
         '''
@@ -26,6 +28,7 @@ class Game:
                     pygame.quit()
                     sys.exit()
             self.screen.fill(settings.WHITE)
+            self.board.draw()
             pygame.display.update()
             self.clock.tick(settings.FPS)
 
