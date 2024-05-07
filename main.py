@@ -5,6 +5,8 @@ import sys
 import pygame
 import settings
 from board import Board
+from student_class import Student
+import random
 
 class Game:
     '''
@@ -22,8 +24,11 @@ class Game:
         '''
         This method is responsible for creating and running a window
         '''
-        # x = 18
-        # y = 18
+        test_set = {Student(10, 80, (random.randrange(1, 39), random.randrange(1,69))),
+                    Student(20, 30, (random.randrange(1, 39), random.randrange(1,69))),
+                    Student(80, 80, (random.randrange(1, 39), random.randrange(1,69))),
+                    Student(100, 10, (random.randrange(1, 39), random.randrange(1,69))),
+                    Student(35, 50, (random.randrange(1, 39), random.randrange(1,69)))}
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -31,17 +36,22 @@ class Game:
                     sys.exit()
             self.screen.fill(settings.WHITE)
             self.board.draw()
-            # This was a testing of creating a sprite without influencing the map
-            # keys = pygame.key.get_pressed()
-            # if keys[pygame.K_LEFT]:
-            #     x -= 18
-            # if keys[pygame.K_RIGHT]:
-            #     x += 18
-            # if keys[pygame.K_UP]:
-            #     y -= 18
-            # if keys[pygame.K_DOWN]:
-            #     y += 18
-            # pygame.draw.rect(self.screen, (255, 150, 180), (x, y, 18, 18))
+            for std in test_set:
+                std.move()
+                match std.coords[1]:
+                    case 0:
+                        std.coords = (std.coords[0], 1)
+                    case 69:
+                        std.coords = (std.coords[0], 68)
+                match std.coords[0]:
+                    case 0:
+                        std.coords = (1, std.coords[1])
+                    case 39:
+                        std.coords = (38, std.coords[1])
+                print(std.color)
+                pygame.draw.rect(self.screen, std.color,
+                                 (std.coords[1]*settings.TILESIZE, std.coords[0]*settings.TILESIZE,
+                                  settings.TILESIZE, settings.TILESIZE))
             pygame.display.update()
             self.clock.tick(settings.FPS)
 
