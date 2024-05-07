@@ -41,6 +41,8 @@ class Board:
                     Tile((x,y), './graphics/park.png', self.tiles)
                 elif el == 'V':
                     Tile((x,y), './graphics/vyshnya.png', self.tiles)
+                elif el == ' ':
+                    Tile((x,y), './graphics/back.png', self.tiles)
 
     def draw(self):
         '''
