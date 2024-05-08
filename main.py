@@ -7,6 +7,7 @@ import pygame
 import settings
 from board import Board
 from student_class import Student
+from turing_machine import TuringMachine
 
 class Game:
     '''
@@ -19,6 +20,7 @@ class Game:
         self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
         self.clock = pygame.time.Clock()
         self.board = Board()
+        self.machine = TuringMachine()
         self.student_set = set()
 
     def run(self):
@@ -32,7 +34,7 @@ class Game:
                     sys.exit()
             keys = pygame.key.get_pressed()
             if keys[pygame.K_s]:
-                self.student_set.add(Student(random.randrange(0, 50),
+                self.student_set.add(Student(random.randrange(35, 50),
                                              random.randrange(0, 50),
                                              (random.randrange(1, 39),
                                               random.randrange(1,69))))
@@ -47,6 +49,7 @@ class Game:
         This method simulates student's behavior on the map (moving around)
         '''
         for std in self.student_set:
+            self.machine.apply_the_rules(std)
             std.move()
             match std.coords[1]:
                 case 0:
