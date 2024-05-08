@@ -9,7 +9,7 @@ def make_the_colors() -> list:
     Green : 0 index
     """
     shades = [[], [], []]
-    for intensity in range(70, 255, 10):
+    for intensity in range(0, 255, 10):
         shades[2].append((intensity, 0, 0))
         shades[0].append((0, intensity, 0))
         shades[1].append((0, 0, intensity))
@@ -94,7 +94,7 @@ class Student:
         Student's color
         I assume that the max of each attribute can reach up to 50
         """
-
+        # print(self.will_to_live//2 - 1)
         if self.chance_to_fail >= 34:
             color_index = 2
         elif self.chance_to_fail >= 17:

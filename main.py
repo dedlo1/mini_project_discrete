@@ -2,11 +2,11 @@
 This is the main file that has script to start the app
 '''
 import sys
+import random
 import pygame
 import settings
 from board import Board
 from student_class import Student
-import random
 
 class Game:
     '''
@@ -19,11 +19,7 @@ class Game:
         self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
         self.clock = pygame.time.Clock()
         self.board = Board()
-        self.student_set = {Student(10, 80, (random.randrange(1, 39), random.randrange(1,69))),
-                    Student(20, 30, (random.randrange(1, 39), random.randrange(1,69))),
-                    Student(80, 80, (random.randrange(1, 39), random.randrange(1,69))),
-                    Student(100, 10, (random.randrange(1, 39), random.randrange(1,69))),
-                    Student(35, 50, (random.randrange(1, 39), random.randrange(1,69)))}
+        self.student_set = set()
 
     def run(self):
         '''
@@ -34,6 +30,12 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_s]:
+                self.student_set.add(Student(random.randrange(0, 50),
+                                             random.randrange(0, 50),
+                                             (random.randrange(1, 39),
+                                              random.randrange(1,69))))
             self.screen.fill(settings.WHITE)
             self.board.draw()
             self.student_behavior()
