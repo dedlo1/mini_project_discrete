@@ -1,5 +1,8 @@
 """Player class"""
 import random
+from numpy.random import choice
+from turing_machine import dict_of_rules
+
 
 def make_the_colors() -> list:
     """
@@ -44,49 +47,118 @@ def plot_the_colors() -> None:
 
 class Student:
     """APPS student"""
-    def __init__(self, will_to_live:int, chance_to_fail:int, coords = None) -> None:
+    def __init__(self, will_to_live:int, chance_to_fail:int, coords) -> None:
         """Initializing the attributes"""
         self.will_to_live = will_to_live
         self.chance_to_fail = chance_to_fail
+        self.boredom = 0
         self.coords = coords
-        self.direction = None
-        self.steps = 0
+        self.path = []
+        self.dest = None
 
-    # def scan_for_neighbors(self):
-    #     ...
-
-    # def megnetic_influence(self):
-    #     ...
-
-    # def road_map(self):
-    #     ...
 
     def move(self):
         '''
-        This is the method that changes student's coordinates
-        simulating a movement
+        Move the student.
         '''
-        if self.steps <= 0:
-            self.steps = random.randrange(1, 7)
-            match random.randrange(1,12):
-                case 1 | 5 | 9:
-                    self.direction = 'top'
-                case 2 | 6 | 10:
-                    self.direction = 'right'
-                case 3 | 7 | 11:
-                    self.direction = 'bottom'
-                case 4 | 8 | 12:
-                    self.direction = 'left'
-        match self.direction:
-            case 'top':
-                self.coords = (self.coords[0]-1, self.coords[1])
-            case 'right':
-                self.coords = (self.coords[0], self.coords[1]+1)
-            case 'bottom':
-                self.coords = (self.coords[0]+1, self.coords[1])
-            case 'left':
-                self.coords = (self.coords[0], self.coords[1]-1)
-        self.steps -= 1
+
+        self.boredom += 1
+        urgency = (50 - self.will_to_live) + self.chance_to_fail + self.boredom
+
+        if random.random() + urgency * 0.01 > 0.9:
+            self.choose_destination()
+            self.boredom = 0
+
+        if self.dest is None:
+            self.choose_random_path()
+
+        else:
+            self.move_to_destination()
+
+
+    def choose_destination(self):
+        '''
+        Choose the destination that the student will go to.
+        '''
+
+        possibilities = sorted(dict_of_rules)
+
+        probabilities = [
+            max(0, (dict_of_rules[key][0] * (50 - self.will_to_live) - dict_of_rules[key][1] * self.chance_to_fail))
+            for key in possibilities
+        ]
+
+        divid = sum(probabilities)
+
+        if divid:
+            probabilities = [p / divid for p in probabilities]
+    
+        else:
+            probabilities = [1 / len(probabilities) for _ in probabilities]
+
+        result = choice(possibilities, None, True, probabilities)
+
+        self.dest = sign_t0_class[result]()
+
+
+    def choose_random_path(self):
+        '''
+        Choose a random path for the student. Used if there is no destination.
+        '''
+
+        dy, dx = random.choice(((0, 1), (1, 0), (-1, 0), (0, -1)))
+        self.coords = (self.coords[0] + dy, self.coords[1] + dx)
+
+
+    def move_inside(self):
+        '''
+        Move the student inside the building.
+        Used when the student reaches the current destination.
+        '''
+        possibilities = []
+
+        for dy, dx in ((0, 1), (1, 0), (-1, 0), (0, -1)):
+
+            new_coords = (self.coords[0] + dy, self.coords[1] + dx)
+
+            if self.dest is not None and new_coords in self.dest:
+                possibilities.append(new_coords)
+
+        self.coords = random.choice(possibilities)
+
+
+    def move_to_destination(self):
+        '''
+        Move the student to the destination, or inside the destination.
+        '''
+
+        if self.dest is not None and self.coords in self.dest:
+            self.move_inside()
+            return
+
+        elif not self.path:
+            self.grid_bfs()
+
+        self.coords = self.path.pop(0)
+
+
+    def grid_bfs(self):
+        """
+        Breadth-first search on a grid, decides on the best path to the destination
+        """
+        visited = {self.coords}
+        queue = [[self.coords]]
+        while queue:
+            current = queue.pop(0)
+            for dy, dx in ((0, 1), (1, 0), (-1, 0), (0, -1)):
+                new_coords = (current[-1][0] + dy, current[-1][1] + dx)
+                if self.dest is not None and new_coords in self.dest:
+                    self.path = current[1:] + [new_coords]
+                    return
+                if 1 <= new_coords[0] <= 38 and 1 <= new_coords[1] <= 68 and new_coords not in visited:
+                    visited.add(new_coords)
+                    queue.append(current + [new_coords])
+
 
     @property
     def color(self):
@@ -106,3 +178,126 @@ class Student:
         if self.will_to_live < 0:
             return LIST_OF_COLORS[color_index][0]
         return LIST_OF_COLORS[color_index][self.will_to_live//2 - 1]
+
+
+class Podatkova:
+    '''
+    Podatkova building
+    '''
+
+    def __init__(self):
+        self.will_to_live = 0
+        self.chance_to_fail = 0
+
+    def __contains__(self, coords):
+        return 1 <= coords[0] <= 7 and 1 <= coords[1] <= 10
+
+
+class Shept:
+    '''
+    Sheptytskyi building
+    '''
+
+    def __init__(self):
+        self.will_to_live = -1
+        self.chance_to_fail = -1
+
+    def __contains__(self, coords):
+        return (1 <= coords[0] <= 7 and 35 <= coords[1] <= 50) or\
+                (8 <= coords[0] <= 22 and 44 <= coords[1] <= 50)
+
+
+class Church:
+    '''
+    Church building
+    '''
+
+    def __init__(self):
+        self.will_to_live = 1
+        self.chance_to_fail = -1
+
+    def __contains__(self, coords):
+        return 11 <= coords[0] <= 13 and 62 <= coords[1] <= 64
+
+
+class Park:
+    '''
+    Park
+    '''
+
+    def __init__(self):
+        self.will_to_live = 1
+        self.chance_to_fail = 0
+
+    def __contains__(self, coords):
+        return 1 <= coords[0] <= 38 and 55 <= coords[1] <= 68 and\
+            not (11 <= coords[0] <= 13 and 62 <= coords[1] <= 64)
+
+
+class PV:
+    '''
+    PV building
+    '''
+
+    def __init__(self):
+        self.will_to_live = 5
+        self.chance_to_fail = 0
+
+    def __contains__(self, coords):
+        return 11 <= coords[0] <= 13 and 62 <= coords[1] <= 64
+
+
+class Canteene:
+    '''
+    Canteene
+    '''
+    
+    def __init__(self):
+        self.will_to_live = 1
+        self.chance_to_fail = 0
+
+    def __contains__(self, coords):
+        return 12 <= coords[0] <= 22 and 5 <= coords[1] <= 14
+
+
+class K1:
+    '''
+    K1 building
+    '''
+    
+    def __init__(self):
+        self.will_to_live = 1
+        self.chance_to_fail = -1
+
+    def __contains__(self, coords):
+        return (28 <= coords[0] <= 31 and 22 <= coords[1] <= 44) or\
+                (31 <= coords[0] <= 34 and 38 <= coords[1] <= 44)
+
+
+class K2:
+    '''
+    K2 building
+    '''
+
+    def __init__(self):
+        self.will_to_live = 2
+        self.chance_to_fail = 2
+
+    def __contains__(self, coords):
+        return 35 <= coords[0] <= 38 and 22 <= coords[1] <= 44
+
+
+class IT:
+    '''
+    IT building
+    '''
+    
+    def __init__(self):
+        self.will_to_live = -2
+        self.chance_to_fail = -2
+
+    def __contains__(self, coords):
+        return 23 <= coords[0] <= 30 and 5 <= coords[1] <= 14
+
+
+sign_t0_class = {'P': Podatkova, 'ß': Shept, 'C': Church, '1': K1, '0': K2, 'I': IT, 'V': PV, 'Ø': Canteene, '▓': Park}
