@@ -88,6 +88,15 @@ class Student:
             self.move_to_destination()
 
 
+    def set_new_destination(self, destination):
+        '''
+        Manually set a new destination for the student.
+        '''
+
+        self.dest = destination
+        self.path = []
+
+
     def choose_destination(self):
         '''
         Choose the destination that the student will go to.
@@ -143,6 +152,8 @@ class Student:
         '''
         Move the student to the destination, or inside the destination.
         '''
+        if self.will_to_live < 15:
+            self.set_new_destination(Podatkova())
 
         if self.dest is not None and self.coords in self.dest:
             self.move_inside()
