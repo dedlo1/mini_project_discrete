@@ -18,15 +18,40 @@ MAP_OF_ZONES = {'P': {(3, 4), (4, 3), (3, 1), (3, 7), (4, 9), (4, 6), (5, 4), (3
 ##  The first index : will_to_live
 ##  The second index : chance_to_fail
 
-dict_of_rules = {"P":(0,0), "▓": (1, 0), "V": (5, 0), '0': (2, 2), '1': (1, -1), "C": (1, -1), "I": (-2, -2), "Ø": (1, 0), "ß": (-1, -1)}
+dict_of_rules = {"P":(0,0), "▓": (1, 0), "V": (5, 0), '0': (2, 2), '1': (1, -1), "C": (-1, -1), "I": (-2, -2), "Ø": (1, 0), "ß": (-1, -1)}
 
-class TuringMachine:
+class FSM:
     """HZ just applying the rules of zones ¯\_('')_/¯ """
     @staticmethod
-    def apply_the_rules(student) -> None:
+    def change_the_state(student) -> None:
         """Mutate the instance of the Student class according to the rules"""
-        for key, value in MAP_OF_ZONES.items():
-            if student.coords in value:
-                student.will_to_live = min(50, max(0, (student.will_to_live + dict_of_rules[key][0])))
-                student.chance_to_fail = min(50, max(0, (student.chance_to_fail + dict_of_rules[key][1])))
-                break
+
+        if 1 <= student.coords[0] <= 7 and 1 <= student.coords[1] <= 10:
+            changer = ["P", dict_of_rules["P"]]
+        elif 1 <= student.coords[0] <= 22 and 35 <= student.coords[1] <= 50:
+            changer = ['ß', dict_of_rules['ß']]
+        elif 1 <= student.coords[0] <= 38 and 55 <= student.coords[1] <= 68:
+            changer = ['▓', dict_of_rules['▓']]
+        elif 11 <= student.coords[0] <= 25 and 22 <= student.coords[1] <= 38:
+
+            student.special_state = None
+            changer = ["C", dict_of_rules["C"]]
+
+        elif 11 <= student.coords[0] <= 13 and 62 <= student.coords[1] <= 64:
+            student.special_state = 'Yes'
+
+            ## In this line set the route for a student to church
+
+            changer = ["V", dict_of_rules["V"]]
+        elif 12 <= student.coords[0] <= 22 and 5 <= student.coords[1] <= 14:
+            changer = ['Ø', dict_of_rules['Ø']]
+        elif 23 <= student.coords[0] <= 30 and 5 <= student.coords[1] <= 14:
+            changer = ["I", dict_of_rules["I"]]
+        elif 28 <= student.coords[0] <= 34 and 22 <= student.coords[1] <= 44:
+            changer = ["1", dict_of_rules["1"]]
+        elif 35 <= student.coords[0] <= 38 and 22 <= student.coords[1] <= 44:
+            changer = ["0", dict_of_rules["0"]]
+        else:
+            changer = [None, (0, 0)]
+
+        student.state = changer

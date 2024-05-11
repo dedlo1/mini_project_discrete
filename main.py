@@ -7,7 +7,7 @@ import pygame
 import settings
 from board import Board
 from student_class import Student
-from turing_machine import TuringMachine
+from fsm import FSM
 
 class Game:
     '''
@@ -20,8 +20,8 @@ class Game:
         self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
         self.clock = pygame.time.Clock()
         self.board = Board()
-        self.machine = TuringMachine()
-        self.student_set = set()
+        self.machine = FSM()
+        self.student_set = []
 
     def run(self):
         '''
@@ -34,7 +34,7 @@ class Game:
                     sys.exit()
             keys = pygame.key.get_pressed()
             if keys[pygame.K_s]:
-                self.student_set.add(Student(random.randrange(35, 50),
+                self.student_set.append(Student(random.randrange(35, 50),
                                              random.randrange(0, 50),
                                              (random.randrange(1, 39),
                                               random.randrange(1,69))))
@@ -48,8 +48,13 @@ class Game:
         '''
         This method simulates student's behavior on the map (moving around)
         '''
-        for std in self.student_set:
-            self.machine.apply_the_rules(std)
+        for num, std in enumerate(self.student_set):
+            if std.will_to_live < 15 and std.state[0] == "P":
+                print(f"Deleted {std}")
+                self.student_set.pop(num)
+                continue
+            self.machine.change_the_state(std)
+            std.apply_the_state()
             std.move()
             match std.coords[1]:
                 case 0:
@@ -69,3 +74,9 @@ class Game:
 if __name__ == '__main__':
     game = Game()
     game.run()
+    # st = Student(10, 100, (0, 0))
+    # st.state = ["P", (0, 0)]
+    # m = FSM()
+    # m.change_the_state(st)
+    # print(st)
+    # print(st) 

@@ -1,7 +1,7 @@
 """Player class"""
 import random
 from numpy.random import choice
-from turing_machine import dict_of_rules
+from fsm import dict_of_rules
 
 
 def make_the_colors() -> list:
@@ -55,6 +55,18 @@ class Student:
         self.coords = coords
         self.path = []
         self.dest = None
+        self.state = [None, (0, 0)]
+        self.special_state = None
+
+    def __repr__(self) -> str:
+        return f"Student: {self.will_to_live}, {self.chance_to_fail}"
+
+    def apply_the_state(self):
+        if self.special_state:
+            self.chance_to_fail -= 2
+        self.will_to_live += self.state[1][0]
+        self.chance_to_fail += self.state[1][1]
+        
 
 
     def move(self):
@@ -167,6 +179,8 @@ class Student:
         I assume that the max of each attribute can reach up to 50
         """
         # print(self.will_to_live//2 - 1)
+        if self.special_state:
+            return (128, 0, 128)
         if self.chance_to_fail >= 34:
             color_index = 2
         elif self.chance_to_fail >= 17:
@@ -298,6 +312,12 @@ class IT:
 
     def __contains__(self, coords):
         return 23 <= coords[0] <= 30 and 5 <= coords[1] <= 14
+
+# class Zahublenie:
+#     """You got lost in piana vyshnia"""
+#     def __init__(self) -> None:
+#         self.will_to_live = 0
+#         self.chance_to_fail = 2
 
 
 sign_t0_class = {'P': Podatkova, 'ß': Shept, 'C': Church, '1': K1, '0': K2, 'I': IT, 'V': PV, 'Ø': Canteene, '▓': Park}
