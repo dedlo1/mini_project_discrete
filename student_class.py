@@ -97,6 +97,14 @@ class Student:
         self.path = []
 
 
+    def set_new_path(self, path):
+        '''
+        Manually set a new path for the student.
+        '''
+
+        self.path = path
+
+
     def choose_destination(self):
         '''
         Choose the destination that the student will go to.
