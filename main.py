@@ -74,9 +74,16 @@ class Game:
 if __name__ == '__main__':
     game = Game()
     game.run()
-    # st = Student(10, 100, (0, 0))
-    # st.state = ["P", (0, 0)]
+    # st = Student(10, 100, (12, 62))
+    # st.state = ["V", (0, 0)]
     # m = FSM()
-    # m.change_the_state(st)
     # print(st)
-    # print(st) 
+    # m.change_the_state(st)
+    # st.apply_the_state()
+    # print(st)
+    # print(st.color)
+    # m.change_the_state(st)
+    # st.apply_the_state()
+    # print(st)
+    # print(st.color)
+    # # print(st) 

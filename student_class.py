@@ -197,20 +197,23 @@ class Student:
         Student's color
         I assume that the max of each attribute can reach up to 50
         """
+        print("None" if not self.special_state else str(self.special_state))
         # print(self.will_to_live//2 - 1)
         if self.special_state:
+            print("hi")
             return (128, 0, 128)
-        if self.chance_to_fail >= 34:
-            color_index = 2
-        elif self.chance_to_fail >= 17:
-            color_index = 1
         else:
-            color_index = 0
-        if self.will_to_live > 50:
-            return LIST_OF_COLORS[color_index][24]
-        if self.will_to_live < 0:
-            return LIST_OF_COLORS[color_index][0]
-        return LIST_OF_COLORS[color_index][self.will_to_live//2 - 1]
+            if self.chance_to_fail >= 34:
+                color_index = 2
+            elif self.chance_to_fail >= 17:
+                color_index = 1
+            else:
+                color_index = 0
+            if self.will_to_live > 50:
+                return LIST_OF_COLORS[color_index][24]
+            if self.will_to_live < 0:
+                return LIST_OF_COLORS[color_index][0]
+            return LIST_OF_COLORS[color_index][self.will_to_live//2 - 1]
 
 
 class Podatkova:

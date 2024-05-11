@@ -25,13 +25,18 @@ class FSM:
     @staticmethod
     def change_the_state(student) -> None:
         """Mutate the instance of the Student class according to the rules"""
-
+        print(student.coords)
         if 1 <= student.coords[0] <= 7 and 1 <= student.coords[1] <= 10:
             changer = ["P", dict_of_rules["P"]]
-        elif 1 <= student.coords[0] <= 22 and 35 <= student.coords[1] <= 50:
+
+        elif 1 <= student.coords[0] <= 7 and 35 <= student.coords[1] <= 50 or \
+            8 <= student.coords[0] <= 22 and 44 <= student.coords[1] <= 50:
             changer = ['ß', dict_of_rules['ß']]
-        elif 1 <= student.coords[0] <= 38 and 55 <= student.coords[1] <= 68:
+
+        elif 1 <= student.coords[0] <= 38 and 55 <= student.coords[1] <= 68 and not \
+        (11 <= student.coords[0] <= 13 and 62 <= student.coords[1] <= 64):
             changer = ['▓', dict_of_rules['▓']]
+
         elif 11 <= student.coords[0] <= 25 and 22 <= student.coords[1] <= 38:
 
             student.special_state = None
@@ -39,16 +44,21 @@ class FSM:
 
         elif 11 <= student.coords[0] <= 13 and 62 <= student.coords[1] <= 64:
             student.special_state = 'Yes'
+            print("Coords")
 
             ## In this line set the route for a student to church
 
             changer = ["V", dict_of_rules["V"]]
         elif 12 <= student.coords[0] <= 22 and 5 <= student.coords[1] <= 14:
             changer = ['Ø', dict_of_rules['Ø']]
+
         elif 23 <= student.coords[0] <= 30 and 5 <= student.coords[1] <= 14:
             changer = ["I", dict_of_rules["I"]]
-        elif 28 <= student.coords[0] <= 34 and 22 <= student.coords[1] <= 44:
+
+        elif 28 <= student.coords[0] <= 31 and 22 <= student.coords[1] <= 44 or \
+            32 <= student.coords[0] <= 34 and 38 <= student.coords[1] <= 44:
             changer = ["1", dict_of_rules["1"]]
+
         elif 35 <= student.coords[0] <= 38 and 22 <= student.coords[1] <= 44:
             changer = ["0", dict_of_rules["0"]]
         else:
