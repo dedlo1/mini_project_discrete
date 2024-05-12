@@ -8,6 +8,7 @@ import settings
 from board import Board
 from student_class import Student
 from turing_machine import TuringMachine
+from ivents import Ivents
 
 class Game:
     '''
@@ -38,6 +39,25 @@ class Game:
                                              random.randrange(0, 50),
                                              (random.randrange(1, 39),
                                               random.randrange(1,69))))
+            if keys[pygame.K_1]:
+                Ivents.pan_Stepan(self.student_set)
+                # write text on the screen
+                # font = pygame.font.Font('freesansbold.ttf', 32)
+                # text = font.render("Pan S", True, settings.BLACK)
+                # self.screen.blit(text, (10, 10))
+
+
+            if keys[pygame.K_2]:
+                Ivents.cos_pT(self.student_set)
+            if keys[pygame.K_3]:
+                Ivents.cos_pY(self.student_set)
+            if keys[pygame.K_4]:
+                Ivents.Oles(self.student_set)
+            if keys[pygame.K_5]:
+                Ivents.povers(self.student_set)
+            if keys[pygame.K_6]:
+                Ivents.ispyt(self.student_set)
+
             self.screen.fill(settings.WHITE)
             self.board.draw()
             self.student_behavior()
