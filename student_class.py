@@ -192,7 +192,7 @@ class Student:
 
     def apply_the_state(self):
         if self.special_state:
-            self.chance_to_fail -= 2
+            self.chance_to_fail += 2
         self.will_to_live = max(0, min(50, self.will_to_live + self.state[1][0]))
         self.chance_to_fail = max(0, min(50, self.chance_to_fail + self.state[1][1]))
         
