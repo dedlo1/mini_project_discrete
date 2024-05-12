@@ -244,13 +244,14 @@ class Student:
 
         possibilities = sorted(dict_of_rules)
 
-        print(type(self.dest))
 
         probabilities = [
-            max(2, (dict_of_rules[key][0] * (50 - self.will_to_live) - dict_of_rules[key][1] * self.chance_to_fail))
-            if self.dest is None or self.dest != sign_to_class[key] else 1
+            max(10, (dict_of_rules[key][0] * (50 - self.will_to_live) - dict_of_rules[key][1] * self.chance_to_fail))
+            if self.dest is None or self.dest != sign_to_class[key] else 5
             for key in possibilities
         ]
+
+        print(probabilities)
 
         divid = sum(probabilities)
 

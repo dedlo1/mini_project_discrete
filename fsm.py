@@ -18,7 +18,7 @@ MAP_OF_ZONES = {'P': {(3, 4), (4, 3), (3, 1), (3, 7), (4, 9), (4, 6), (5, 4), (3
 ##  The first index : will_to_live
 ##  The second index : chance_to_fail
 
-dict_of_rules = {"P":(0,0), "▓": (1, 0), "V": (5, 0), '0': (2, 2), '1': (1, -1), "C": (1, -1), "I": (-2, -2), "Ø": (1, 0), "ß": (-1, -1)}
+dict_of_rules = {"P":(0,0), "▓": (1, 0), "V": (5, 0), '0': (2, 2), '1': (1, -1), "C": (2, 0), "I": (-2, -2), "Ø": (1, 0), "ß": (-1, -1)}
 
 class FSM:
     """HZ just applying the rules of zones ¯\_('')_/¯ """
