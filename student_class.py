@@ -75,7 +75,7 @@ class Canteene:
     '''
     Canteene
     '''
-    
+
     def __init__(self):
         self.will_to_live = 1
         self.chance_to_fail = 0
@@ -88,7 +88,7 @@ class K1:
     '''
     K1 building
     '''
-    
+
     def __init__(self):
         self.will_to_live = 1
         self.chance_to_fail = -1
@@ -115,7 +115,7 @@ class IT:
     '''
     IT building
     '''
-    
+
     def __init__(self):
         self.will_to_live = -2
         self.chance_to_fail = -2
@@ -205,7 +205,7 @@ class Student:
 
         self.boredom += 1
         urgency = (50 - self.will_to_live) + self.chance_to_fail + self.boredom
-        print(self.will_to_live)
+        #print(self.will_to_live)
 
         if random.random() + urgency * 0.01 > 0.9:
             self.choose_destination()
@@ -251,7 +251,7 @@ class Student:
             for key in possibilities
         ]
 
-        print(probabilities)
+        #print(probabilities)
 
         divid = sum(probabilities)
 

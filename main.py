@@ -32,17 +32,28 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_s]:
-                self.student_set.append(Student(random.randrange(35, 50),
-                                             random.randrange(0, 50),
-                                             (random.randrange(1, 39),
-                                              random.randrange(1,69))))
+            # keys = pygame.key.get_pressed()
+            # if keys[pygame.K_s]:
+            #     self.student_set.append(Student(random.randrange(35, 50),
+            #                                  random.randrange(0, 50),
+            #                                  (random.randrange(1, 39),
+            #                                   random.randrange(1,69))))
+            self.spawn_student()
             self.screen.fill(settings.WHITE)
             self.board.draw()
             self.student_behavior()
             pygame.display.update()
             self.clock.tick(settings.FPS)
+
+    def spawn_student(self):
+        '''
+        This method spawns a student on the coordinate of the cursor
+        '''
+        mouse_position = pygame.mouse.get_pos()
+        if pygame.mouse.get_pressed()[0]:
+            self.student_set.append(Student(random.randrange(35, 50),
+                                            random.randrange(0, 50),
+                                            ((mouse_position[1]//18), (mouse_position[0]//18))))
 
     def student_behavior(self):
         '''
