@@ -211,9 +211,23 @@ class Student:
             self.choose_destination()
             self.boredom = 0
 
-        if self.dest is None or random.random() < 0.2:
-            self.path = []
+        elif self.dest is None:
             self.choose_random_path()
+
+        elif self.dest is not None and self.coords in self.dest:
+            self.move_inside()
+            return
+
+        elif random.random() <= 0.15:
+            self.choose_random_path()
+
+            if len(self.path) > 1:
+
+                self.path.pop(0)
+                self.path = self.bfs_util(self.path[0]) + self.path
+
+            else: 
+                self.grid_bfs()
 
         else:
             self.move_to_destination()
@@ -226,7 +240,7 @@ class Student:
         '''
 
         self.dest = destination
-        self.path = []
+        self.grid_bfs()
 
 
     def set_new_path(self, path):
@@ -264,6 +278,7 @@ class Student:
         result = choice(possibilities, None, True, probabilities)
 
         self.dest = sign_to_class[result]
+        self.grid_bfs()
 
 
     def choose_random_path(self):
@@ -299,14 +314,25 @@ class Student:
         if self.will_to_live < 15:
             self.set_new_destination(Podatkova())
 
-        if self.dest is not None and self.coords in self.dest:
-            self.move_inside()
-            return
-
-        elif not self.path:
-            self.grid_bfs()
-
         self.coords = self.path.pop(0)
+
+
+    def bfs_util(self, dest: tuple[int])-> list[tuple[int]]:
+        '''
+        Utility function that realizes the BFS algorithm.
+        '''
+        visited = {self.coords}
+        queue = [[self.coords]]
+        while queue:
+            current = queue.pop(0)
+            for dy, dx in random.sample(((0, 1), (1, 0), (-1, 0), (0, -1)), 4):
+                new_coords = (current[-1][0] + dy, current[-1][1] + dx)
+                if new_coords == dest:
+                    return current[1:] + [new_coords]
+                if 1 <= new_coords[0] <= 38 and 1 <= new_coords[1] <= 68 and new_coords not in visited:
+                    visited.add(new_coords)
+                    queue.append(current + [new_coords])
+
 
 
     def grid_bfs(self):

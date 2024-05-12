@@ -61,7 +61,7 @@ class Game:
         '''
         for num, std in enumerate(self.student_set):
             if std.will_to_live <= 5 and std.state[0] == "P":
-                print(f"Deleted {std}")
+                # print(f"Deleted {std}")
                 self.student_set.pop(num)
                 continue
             self.machine.change_the_state(std)
