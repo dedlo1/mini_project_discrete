@@ -64,5 +64,5 @@ class Ivents:
         """
         set_copy = student_set.copy()
         for student in set_copy:
-            if student.chance_to_fail >= 25:
+            if student.chance_to_fail >= 40:
                 student_set.remove(student)
