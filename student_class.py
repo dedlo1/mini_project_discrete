@@ -197,21 +197,22 @@ class Student:
         self.chance_to_fail = max(0, min(50, self.chance_to_fail + self.state[1][1]))
         
 
-
     def move(self):
         '''
         Move the student.
         '''
 
-        self.boredom += 1
+        self.boredom += 0.25
         urgency = (50 - self.will_to_live) + self.chance_to_fail + self.boredom
-        #print(self.will_to_live)
 
-        if random.random() + urgency * 0.01 > 0.9:
+        if self.coords[1] in (0, 69) or self.coords[0] in (0, 39):
+            return
+
+        elif random.random() + urgency * 0.01 > 0.9:
             self.choose_destination()
             self.boredom = 0
 
-        if self.dest is None or random.random() < 0.2:
+        if self.dest is None or random.random() < 0.7:
             self.path = []
             self.choose_random_path()
 
@@ -251,8 +252,6 @@ class Student:
             for key in possibilities
         ]
 
-        #print(probabilities)
-
         divid = sum(probabilities)
 
         if divid:
@@ -281,6 +280,7 @@ class Student:
         Used when the student reaches the current destination.
         '''
         possibilities = []
+        self.boredom += 1
 
         for dy, dx in ((0, 1), (1, 0), (-1, 0), (0, -1)):
 
@@ -296,7 +296,7 @@ class Student:
         '''
         Move the student to the destination, or inside the destination.
         '''
-        if self.will_to_live < 15:
+        if self.will_to_live < 5:
             self.set_new_destination(Podatkova())
 
         if self.dest is not None and self.coords in self.dest:
@@ -333,10 +333,7 @@ class Student:
         Student's color
         I assume that the max of each attribute can reach up to 50
         """
-        # print("None" if not self.special_state else str(self.special_state))
-        # print(self.will_to_live//2 - 1)
         if self.special_state:
-            # print("hi")
             return (128, 0, 128)
         else:
             if self.chance_to_fail >= 34:
@@ -349,5 +346,4 @@ class Student:
                 return LIST_OF_COLORS[color_index][24]
             if self.will_to_live < 0:
                 return LIST_OF_COLORS[color_index][0]
-            return LIST_OF_COLORS[color_index][self.will_to_live//2 - 1]
-
+            return LIST_OF_COLORS[color_index][max(self.will_to_live//2 - 1, 0)]
