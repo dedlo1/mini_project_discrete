@@ -207,7 +207,10 @@ class Student:
         urgency = (50 - self.will_to_live) + self.chance_to_fail + self.boredom
         #print(self.will_to_live)
 
-        if random.random() + urgency * 0.01 > 0.9:
+        if self.coords[1] in (0, 69) or self.coords[0] in (0, 39):
+            return
+
+        elif random.random() + urgency * 0.01 > 0.9:
             self.choose_destination()
             self.boredom = 0
 
