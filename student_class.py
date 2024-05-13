@@ -203,7 +203,7 @@ class Student:
         Move the student.
         '''
 
-        self.boredom += 1
+        self.boredom += 0.25
         urgency = (50 - self.will_to_live) + self.chance_to_fail + self.boredom
         print(self.will_to_live)
 
@@ -211,7 +211,7 @@ class Student:
             self.choose_destination()
             self.boredom = 0
 
-        if self.dest is None or random.random() < 0.2:
+        if self.dest is None or random.random() < 0.07:
             self.path = []
             self.choose_random_path()
 
@@ -280,6 +280,7 @@ class Student:
         Move the student inside the building.
         Used when the student reaches the current destination.
         '''
+        self.boredom += 1
         possibilities = []
 
         for dy, dx in ((0, 1), (1, 0), (-1, 0), (0, -1)):
@@ -296,7 +297,7 @@ class Student:
         '''
         Move the student to the destination, or inside the destination.
         '''
-        if self.will_to_live < 15:
+        if self.will_to_live <= 5:
             self.set_new_destination(Podatkova())
 
         if self.dest is not None and self.coords in self.dest:
