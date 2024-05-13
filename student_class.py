@@ -205,7 +205,7 @@ class Student:
 
         self.boredom += 1
         urgency = (50 - self.will_to_live) + self.chance_to_fail + self.boredom
-        print(self.will_to_live)
+        # print(self.will_to_live)
 
         if random.random() + urgency * 0.01 > 0.9:
             self.choose_destination()
@@ -251,7 +251,7 @@ class Student:
             for key in possibilities
         ]
 
-        print(probabilities)
+        # print(probabilities)
 
         divid = sum(probabilities)
 
@@ -349,5 +349,4 @@ class Student:
                 return LIST_OF_COLORS[color_index][24]
             if self.will_to_live < 0:
                 return LIST_OF_COLORS[color_index][0]
-            return LIST_OF_COLORS[color_index][self.will_to_live//2 - 1]
-
+            return LIST_OF_COLORS[color_index][max(self.will_to_live//2 - 1, 0)]

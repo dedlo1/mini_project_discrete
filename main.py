@@ -49,7 +49,8 @@ class Game:
         This method simulates student's behavior on the map (moving around)
         '''
         for num, std in enumerate(self.student_set):
-            if std.will_to_live <= 5 and std.state[0] == "P":
+            print(std)
+            if std.will_to_live <= 8 and std.state[0] == "P":
                 print(f"Deleted {std}")
                 self.student_set.pop(num)
                 continue
