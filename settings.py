@@ -3,12 +3,22 @@ This is a file that contains the variables relieble for settings of some sort
 '''
 WIDTH = 1500
 HEIGHT = 720
-FPS = 20
+FPS = 5
 TILESIZE = 18
 
 #Colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+
+#Text to be written on the window
+INSTRUCTIONS = ["Events",
+                "Press num keys to activate an event:",
+                "1 - Pan Stepan",
+                "2 - Pani Tetyana",
+                "3 - Pani Yulia",
+                "4 - Oles",
+                "5 - Students serve on powerbanks",
+                "6 - EXAMS"]
 
 # X - border
 # P - Podatkova

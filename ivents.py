@@ -36,7 +36,7 @@ class Ivents:
         """
         for student in student_set:
             student.will_to_live -= 5
-            student.chance_to_fail += 7
+            student.chance_to_fail -= 5
 
     @staticmethod
     def Oles(student_set):
@@ -64,11 +64,6 @@ class Ivents:
             if student.chance_to_fail >= 40:
                 student_set.remove(student)
 
-
-
-
-
-
 import random
 from student_class import Student
 
@@ -76,7 +71,6 @@ from student_class import Student
 class Pan_S(Student):
     def __init__(self, coords):
         super().__init__(50, 0, coords)
-        # self.dest = (0, 0)
 
     def move(self):
 

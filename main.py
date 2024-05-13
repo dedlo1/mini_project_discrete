@@ -41,9 +41,6 @@ class Game:
                 self.unit_set.append(Pan_S((20, 10))
                 )
                 Ivents.pan_Stepan(self.student_set, self.unit_set[0])
-                # font = pygame.font.Font('freesansbold.ttf', 32)
-                # text = font.render("Pan S", True, settings.BLACK)
-                # self.screen.blit(text, (10, 10))
 
             if keys[pygame.K_2]:
                 Ivents.cos_pT(self.student_set)
@@ -58,19 +55,28 @@ class Game:
 
             self.screen.fill(settings.WHITE)
             self.board.draw()
+            self.write_hotkeys()
             self.student_behavior()
             self.unit_behavior()
             pygame.display.update()
             self.clock.tick(settings.FPS)
+
+    def write_hotkeys(self):
+        '''
+        This method writes hotkeys instructions in the window
+        '''
+        text_y = 18
+        for line in settings.INSTRUCTIONS:
+            img = pygame.font.SysFont('Arial', 16).render(line, True, settings.BLACK)
+            self.screen.blit(img, (1260, text_y))
+            text_y += 20
 
     def student_behavior(self):
         '''
         This method simulates student's behavior on the map (moving around)
         '''
         for num, std in enumerate(self.student_set):
-            print(std)
             if std.will_to_live <= 8 and std.state[0] == "P":
-                print(f"Deleted {std}")
                 self.student_set.pop(num)
                 continue
             if self.unit_set:
@@ -91,7 +97,7 @@ class Game:
             pygame.draw.rect(self.screen, std.color,
                                 (std.coords[1]*settings.TILESIZE, std.coords[0]*settings.TILESIZE,
                                 settings.TILESIZE, settings.TILESIZE))
-            
+   
     def unit_behavior(self):
         '''
         This method simulates unit's behavior on the map (moving around)
@@ -120,24 +126,15 @@ class Game:
         This method spawns a student on the coordinate of the cursor
         '''
         mouse_position = pygame.mouse.get_pos()
+        spawn_y = mouse_position[1]//18
+        spawn_x = mouse_position[0]//18
+        if spawn_x >= 69:
+            spawn_x = 68
         if pygame.mouse.get_pressed()[0]:
             self.student_set.append(Student(random.randrange(35, 50),
                                             random.randrange(0, 50),
-                                            ((mouse_position[1]//18), (mouse_position[0]//18))))
+                                            (spawn_y, spawn_x)))
 
 if __name__ == '__main__':
     game = Game()
     game.run()
-    # st = Student(10, 100, (12, 62))
-    # st.state = ["V", (0, 0)]
-    # m = FSM()
-    # print(st)
-    # m.change_the_state(st)
-    # st.apply_the_state()
-    # print(st)
-    # print(st.color)
-    # m.change_the_state(st)
-    # st.apply_the_state()
-    # print(st)
-    # print(st.color)
-    # # print(st)

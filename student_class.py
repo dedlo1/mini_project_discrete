@@ -204,7 +204,6 @@ class Student:
 
         self.boredom += 0.25
         urgency = (50 - self.will_to_live) + self.chance_to_fail + self.boredom
-        #print(self.will_to_live)
 
         if self.coords[1] in (0, 69) or self.coords[0] in (0, 39):
             return
@@ -252,8 +251,6 @@ class Student:
             if self.dest is None or self.dest != sign_to_class[key] else 5
             for key in possibilities
         ]
-
-        #print(probabilities)
 
         divid = sum(probabilities)
 
@@ -336,10 +333,7 @@ class Student:
         Student's color
         I assume that the max of each attribute can reach up to 50
         """
-        # print("None" if not self.special_state else str(self.special_state))
-        # print(self.will_to_live//2 - 1)
         if self.special_state:
-            # print("hi")
             return (128, 0, 128)
         else:
             if self.chance_to_fail >= 34:
