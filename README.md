@@ -11,20 +11,10 @@
 Наша команда обрала найцікавішу із запропонованих тем і вирішила створити симуляцію життя студентів ФПН. Ми створили спрощену мапу кампусу УКУ, на якій зобразили головні місця перебування студентів.
 
 ![alt text](readme_images/image.png)
-<p align="center">
-
 Іл 1. Поле, на якому проходять всі події симуляції 
+<p align="center">
+  <Іл 1. Поле, на якому проходять всі події симуляції>
 </p>
-
-<center>
-
-Your centered text goes here.
-
-</center>
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Centered Text
-
-
 
 	
 Чорний колір - податкова
