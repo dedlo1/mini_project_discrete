@@ -35,11 +35,7 @@ class Game:
                     pygame.quit()
                     sys.exit()
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_s]:
-                self.student_set.append(Student(random.randrange(35, 50),
-                                             random.randrange(0, 50),
-                                             (random.randrange(1, 39),
-                                              random.randrange(1,69))))
+            self.spawn_student()
 
             if keys[pygame.K_1] and len(self.unit_set) == 0:
                 self.unit_set.append(Pan_S((20, 10))
@@ -119,6 +115,15 @@ class Game:
                                 (unit.coords[1]*settings.TILESIZE, unit.coords[0]*settings.TILESIZE,
                                 settings.TILESIZE*2, settings.TILESIZE*2))
 
+    def spawn_student(self):
+        '''
+        This method spawns a student on the coordinate of the cursor
+        '''
+        mouse_position = pygame.mouse.get_pos()
+        if pygame.mouse.get_pressed()[0]:
+            self.student_set.append(Student(random.randrange(35, 50),
+                                            random.randrange(0, 50),
+                                            ((mouse_position[1]//18), (mouse_position[0]//18))))
 
 if __name__ == '__main__':
     game = Game()

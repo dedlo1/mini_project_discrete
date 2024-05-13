@@ -1,7 +1,7 @@
 '''
 This is a file that contains the variables relieble for settings of some sort
 '''
-WIDTH = 1280
+WIDTH = 1500
 HEIGHT = 720
 FPS = 20
 TILESIZE = 18
