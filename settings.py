@@ -3,7 +3,7 @@ This is a file that contains the variables relieble for settings of some sort
 '''
 WIDTH = 1500
 HEIGHT = 720
-FPS = 5
+FPS = 10
 TILESIZE = 18
 
 #Colors
@@ -18,7 +18,13 @@ INSTRUCTIONS = ["Events",
                 "3 - Pani Yulia",
                 "4 - Oles",
                 "5 - Students serve on powerbanks",
-                "6 - EXAMS"]
+                "6 - EXAMS", '', '',
+                'Colors:', 'Green - low risk to fail',
+                'Blue - mid risk to fail',
+                'Red - high risk to fail',
+                'Purple - the student is drunk',
+                'The brightness of the color displays',
+                'student\'s will to live']
 
 # X - border
 # P - Podatkova
