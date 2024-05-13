@@ -8,6 +8,7 @@ import settings
 from board import Board
 from student_class import Student
 from fsm import FSM
+from ivents import Ivents, Pan_S
 
 class Game:
     '''
@@ -22,6 +23,7 @@ class Game:
         self.board = Board()
         self.machine = FSM()
         self.student_set = []
+        self.unit_set = []
 
     def run(self):
         '''
@@ -38,9 +40,30 @@ class Game:
                                              random.randrange(0, 50),
                                              (random.randrange(1, 39),
                                               random.randrange(1,69))))
+
+            if keys[pygame.K_1] and len(self.unit_set) == 0:
+                self.unit_set.append(Pan_S((20, 10))
+                )
+                Ivents.pan_Stepan(self.student_set, self.unit_set[0])
+                # font = pygame.font.Font('freesansbold.ttf', 32)
+                # text = font.render("Pan S", True, settings.BLACK)
+                # self.screen.blit(text, (10, 10))
+
+            if keys[pygame.K_2]:
+                Ivents.cos_pT(self.student_set)
+            if keys[pygame.K_3]:
+                Ivents.cos_pY(self.student_set)
+            if keys[pygame.K_4]:
+                Ivents.Oles(self.student_set)
+            if keys[pygame.K_5]:
+                Ivents.povers(self.student_set)
+            if keys[pygame.K_6]:
+                Ivents.ispyt(self.student_set)
+
             self.screen.fill(settings.WHITE)
             self.board.draw()
             self.student_behavior()
+            self.unit_behavior()
             pygame.display.update()
             self.clock.tick(settings.FPS)
 
@@ -54,6 +77,8 @@ class Game:
                 print(f"Deleted {std}")
                 self.student_set.pop(num)
                 continue
+            if self.unit_set:
+                std.dest = self.unit_set[0]
             self.machine.change_the_state(std)
             std.apply_the_state()
             std.move()
@@ -70,6 +95,29 @@ class Game:
             pygame.draw.rect(self.screen, std.color,
                                 (std.coords[1]*settings.TILESIZE, std.coords[0]*settings.TILESIZE,
                                 settings.TILESIZE, settings.TILESIZE))
+            
+    def unit_behavior(self):
+        '''
+        This method simulates unit's behavior on the map (moving around)
+        '''
+        for _, unit in enumerate(self.unit_set):
+            k = unit.move()
+            if k:
+                self.unit_set.pop(0)
+                continue
+            match unit.coords[1]:
+                case 0:
+                    unit.coords = (unit.coords[0], 1)
+                case 69:
+                    unit.coords = (unit.coords[0], 68)
+            match unit.coords[0]:
+                case 0:
+                    unit.coords = (1, unit.coords[1])
+                case 39:
+                    unit.coords = (38, unit.coords[1])
+            pygame.draw.rect(self.screen, [128, 0, 128],
+                                (unit.coords[1]*settings.TILESIZE, unit.coords[0]*settings.TILESIZE,
+                                settings.TILESIZE*2, settings.TILESIZE*2))
 
 
 if __name__ == '__main__':
