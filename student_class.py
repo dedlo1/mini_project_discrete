@@ -211,7 +211,7 @@ class Student:
             self.choose_destination()
             self.boredom = 0
 
-        if self.dest is None or random.random() < 0.7:
+        if self.dest is None or random.random() < 0.07:
             self.path = []
             self.choose_random_path()
 
