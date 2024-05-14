@@ -112,3 +112,69 @@ class OlesWaypoint1:
 
     def __contains__(self, coords):
         return 3 <= coords[0] <= 4 and 19 <= coords[1] <= 20
+
+class PaniTetyanaWaypoint1:
+    '''
+    This is a class of Waypoint for Pan Stepan event
+    '''
+    def __init__(self):
+        self.will_to_live = 0
+        self.chance_to_fail = 0
+
+    def __contains__(self, coords):
+        return 8 <= coords[0] <= 9 and 28 <= coords[1] <= 29
+
+class PaniTetyanaWaypoint2:
+    '''
+    This is a class of Waypoint for Pan Stepan event
+    '''
+    def __init__(self):
+        self.will_to_live = 0
+        self.chance_to_fail = 0
+
+    def __contains__(self, coords):
+        return 9 <= coords[0] <= 10 and 17 <= coords[1] <= 18
+    
+class PaniTetyanaWaypoint3:
+    '''
+    This is a class of Waypoint for Pan Stepan event
+    '''
+    def __init__(self):
+        self.will_to_live = 0
+        self.chance_to_fail = 0
+
+    def __contains__(self, coords):
+        return 26 <= coords[0] <= 27 and 17 <= coords[1] <= 18
+
+class PaniYuliaWaypoint1:
+    '''
+    This is a class of Waypoint for Pan Stepan event
+    '''
+    def __init__(self):
+        self.will_to_live = 0
+        self.chance_to_fail = 0
+
+    def __contains__(self, coords):
+        return 3 <= coords[0] <= 4 and 46 <= coords[1] <= 47
+
+class PaniYuliaWaypoint2:
+    '''
+    This is a class of Waypoint for Pan Stepan event
+    '''
+    def __init__(self):
+        self.will_to_live = 0
+        self.chance_to_fail = 0
+
+    def __contains__(self, coords):
+        return 4 <= coords[0] <= 5 and 37 <= coords[1] <= 38
+
+class PaniYuliaWaypoint3:
+    '''
+    This is a class of Waypoint for Pan Stepan event
+    '''
+    def __init__(self):
+        self.will_to_live = 0
+        self.chance_to_fail = 0
+
+    def __contains__(self, coords):
+        return 37 <= coords[0] <= 38 and 49 <= coords[1] <= 50

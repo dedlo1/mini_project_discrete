@@ -1,13 +1,15 @@
 import pygame
 import settings
 import random
-from student_class import Park, Student, Canteene
+from student_class import Park, Student, Canteene, Shept, IT
 from special_units_waypoints import (StepanWaypoint1, StepanWaypoint2, StepanWaypoint3,
                                   StepanWaypoint4, StepanWaypoint5, StepanWaypoint6,
                                   StepanWaypoint7, StepanWaypoint8, StepanWaypoint9,
-                                  OlesWaypoint1)
+                                  OlesWaypoint1, PaniTetyanaWaypoint1, PaniTetyanaWaypoint2,
+                                  PaniTetyanaWaypoint3, PaniYuliaWaypoint1, PaniYuliaWaypoint2,
+                                  PaniYuliaWaypoint3)
 
-TIMER_TEMPLATE = [False]*25
+TIMER_TEMPLATE = [False]*30
 TIMER_TEMPLATE.append(True)
 
 class Ivents:
@@ -27,22 +29,24 @@ class Ivents:
             student.chance_to_fail -= 5
 
     @staticmethod
-    def cos_pT(student_set):
+    def cos_pT(student_set, coords):
         """
         Decrease will_to_live by 5
         Decrease chance_to_fail by 3
         """
         for student in student_set:
+            student.dest = coords
             student.will_to_live -= 5
             student.chance_to_fail -= 3
 
     @staticmethod
-    def cos_pY(student_set):
+    def cos_pY(student_set, coords):
         """
         Decrease will_to_live by 5
         Increase chance_to_fail by 7
         """
         for student in student_set:
+            student.dest = coords
             student.chance_to_fail -= 5
 
     @staticmethod
@@ -114,6 +118,85 @@ class Pan_S(Student):
                 self.set_new_destination(Canteene())
 
             elif isinstance(self.dest, Canteene):
+                return True
+
+        if not self.path:
+            self.grid_bfs()
+
+        self.coords = self.path.pop(0)
+
+
+    def __contains__(self, coords):
+        return (self.coords[0] <= coords[0] <= self.coords[0] + 2 and
+                self.coords[1] <= coords[1] <= self.coords[1] + 2)
+
+class PaniTetyana(Student):
+    def __init__(self, coords):
+        super().__init__(50, 0, coords)
+        self.timer = iter(TIMER_TEMPLATE)
+
+    def move(self):
+
+        if self.dest is None:
+            self.set_new_destination(PaniTetyanaWaypoint1())
+
+        elif self.coords in self.dest:
+
+            if isinstance(self.dest, PaniTetyanaWaypoint1):
+                self.set_new_destination(Shept())
+
+            elif isinstance(self.dest, Shept):
+                self.move_inside()
+                if next(self.timer):
+                    self.timer = iter(TIMER_TEMPLATE)
+                    self.set_new_destination(PaniTetyanaWaypoint2())
+
+            elif isinstance(self.dest, PaniTetyanaWaypoint2):
+                self.set_new_destination(PaniTetyanaWaypoint3())
+
+            elif isinstance(self.dest, PaniTetyanaWaypoint3):
+                self.set_new_destination(IT())
+
+            elif isinstance(self.dest, IT):
+                self.move_inside()
+                if next(self.timer):
+                    return True
+
+        if not self.path:
+            self.grid_bfs()
+
+        self.coords = self.path.pop(0)
+
+
+    def __contains__(self, coords):
+        return (self.coords[0] <= coords[0] <= self.coords[0] + 2 and
+                self.coords[1] <= coords[1] <= self.coords[1] + 2)
+
+class PaniYulia(Student):
+    def __init__(self, coords):
+        super().__init__(50, 0, coords)
+        self.timer = iter(TIMER_TEMPLATE)
+
+    def move(self):
+
+        if self.dest is None:
+            self.set_new_destination(Shept())
+
+        elif self.coords in self.dest:
+
+            if isinstance(self.dest, Shept):
+                self.set_new_destination(PaniYuliaWaypoint1())
+
+            elif isinstance(self.dest, PaniYuliaWaypoint1):
+                self.set_new_destination(PaniYuliaWaypoint2())
+
+            elif isinstance(self.dest, PaniYuliaWaypoint2):
+                self.move_inside()
+                if next(self.timer):
+                    self.timer = iter(TIMER_TEMPLATE)
+                    self.set_new_destination(PaniYuliaWaypoint3())
+
+            elif isinstance(self.dest, PaniYuliaWaypoint3):
                 return True
 
         if not self.path:

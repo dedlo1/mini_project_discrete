@@ -8,7 +8,7 @@ import settings
 from board import Board
 from student_class import Student
 from fsm import FSM
-from ivents import Ivents, Pan_S, Oles
+from ivents import Ivents, Pan_S, Oles, PaniTetyana, PaniYulia
 
 class Game:
     '''
@@ -41,19 +41,21 @@ class Game:
                 self.unit_set.append(Pan_S((26, 12)))
                 Ivents.pan_Stepan(self.student_set, self.unit_set[-1])
 
-            if keys[pygame.K_2]:
-                Ivents.cos_pT(self.student_set)
-            if keys[pygame.K_3]:
-                Ivents.cos_pY(self.student_set)
+            if keys[pygame.K_2] and len(self.unit_set) == 0:
+                self.unit_set.append(PaniTetyana((17, 29)))
+                Ivents.cos_pT(self.student_set, self.unit_set[-1])
+
+            if keys[pygame.K_3] and len(self.unit_set) == 0:
+                self.unit_set.append(PaniYulia((37, 49)))
+                Ivents.cos_pY(self.student_set, self.unit_set[-1])
 
             if keys[pygame.K_4] and len(self.unit_set) == 0:
                 self.unit_set.append(Oles((13, 9), self.screen))
                 Ivents.Oles(self.student_set, self.unit_set[-1])
 
-            if keys[pygame.K_b] and not self.unit_set[-1].come_back:
-                self.unit_set[-1].come_back = True
             if keys[pygame.K_5]:
                 Ivents.povers(self.student_set)
+
             if keys[pygame.K_6]:
                 Ivents.ispyt(self.student_set)
 
@@ -111,6 +113,10 @@ class Game:
                 color = (128, 0, 128)
             elif isinstance(unit, Oles):
                 color = (224, 117, 63)
+            elif isinstance(unit, PaniTetyana):
+                color = (211, 2, 219)
+            elif isinstance(unit, PaniYulia):
+                color = (38, 89, 171)
             k = unit.move()
             if k:
                 self.unit_set.pop(0)
@@ -138,7 +144,6 @@ class Game:
         spawn_x = mouse_position[0]//18
         if spawn_x >= 69:
             spawn_x = 68
-        print((spawn_y, spawn_x))
         if pygame.mouse.get_pressed()[0]:
             self.student_set.append(Student(random.randrange(35, 50),
                                             random.randrange(0, 50),
