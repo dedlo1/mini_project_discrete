@@ -5252,6 +5252,10 @@
   ('socketserver',
    'C:\\Users\\ivan2\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\socketserver.py',
    'PYMODULE'),
+  ('special_units_waypoints',
+   'C:\\Users\\ivan2\\OneDrive\\Документи\\Coding\\discrete '
+   'math\\mini_project_discrete\\special_units_waypoints.py',
+   'PYMODULE'),
   ('sqlite3',
    'C:\\Users\\ivan2\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\sqlite3\\__init__.py',
    'PYMODULE'),
