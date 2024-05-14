@@ -3,7 +3,7 @@ This is a file that contains the variables relieble for settings of some sort
 '''
 WIDTH = 1500
 HEIGHT = 720
-FPS = 10
+FPS = 0
 TILESIZE = 18
 
 #Colors
