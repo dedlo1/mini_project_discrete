@@ -97,7 +97,6 @@ class K1:
         return (28 <= coords[0] <= 31 and 22 <= coords[1] <= 44) or\
                 (31 <= coords[0] <= 34 and 38 <= coords[1] <= 44)
 
-
 class K2:
     '''
     K2 building

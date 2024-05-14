@@ -8,7 +8,7 @@ import settings
 from board import Board
 from student_class import Student
 from fsm import FSM
-from ivents import Ivents, Pan_S
+from ivents import Ivents, Pan_S, Oles, PaniTetyana, PaniYulia
 
 class Game:
     '''
@@ -38,18 +38,24 @@ class Game:
             self.spawn_student()
 
             if keys[pygame.K_1] and len(self.unit_set) == 0:
-                self.unit_set.append(Pan_S((20, 10))
-                )
-                Ivents.pan_Stepan(self.student_set, self.unit_set[0])
+                self.unit_set.append(Pan_S((26, 12)))
+                Ivents.pan_Stepan(self.student_set, self.unit_set[-1])
 
-            if keys[pygame.K_2]:
-                Ivents.cos_pT(self.student_set)
-            if keys[pygame.K_3]:
-                Ivents.cos_pY(self.student_set)
-            if keys[pygame.K_4]:
-                Ivents.Oles(self.student_set)
+            if keys[pygame.K_2] and len(self.unit_set) == 0:
+                self.unit_set.append(PaniTetyana((17, 29)))
+                Ivents.cos_pT(self.student_set, self.unit_set[-1])
+
+            if keys[pygame.K_3] and len(self.unit_set) == 0:
+                self.unit_set.append(PaniYulia((37, 49)))
+                Ivents.cos_pY(self.student_set, self.unit_set[-1])
+
+            if keys[pygame.K_4] and len(self.unit_set) == 0:
+                self.unit_set.append(Oles((13, 9), self.screen))
+                Ivents.Oles(self.student_set, self.unit_set[-1])
+
             if keys[pygame.K_5]:
                 Ivents.povers(self.student_set)
+
             if keys[pygame.K_6]:
                 Ivents.ispyt(self.student_set)
 
@@ -103,6 +109,14 @@ class Game:
         This method simulates unit's behavior on the map (moving around)
         '''
         for _, unit in enumerate(self.unit_set):
+            if isinstance(unit, Pan_S):
+                color = (128, 0, 128)
+            elif isinstance(unit, Oles):
+                color = (224, 117, 63)
+            elif isinstance(unit, PaniTetyana):
+                color = (211, 2, 219)
+            elif isinstance(unit, PaniYulia):
+                color = (38, 89, 171)
             k = unit.move()
             if k:
                 self.unit_set.pop(0)
@@ -117,7 +131,7 @@ class Game:
                     unit.coords = (1, unit.coords[1])
                 case 39:
                     unit.coords = (38, unit.coords[1])
-            pygame.draw.rect(self.screen, [128, 0, 128],
+            pygame.draw.rect(self.screen, color,
                                 (unit.coords[1]*settings.TILESIZE, unit.coords[0]*settings.TILESIZE,
                                 settings.TILESIZE*2, settings.TILESIZE*2))
 
